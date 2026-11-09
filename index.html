@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#100c1c" />
+  <meta name="description" content="Acceso a la comunidad de Telegram." />
+  <title>CAPITALBETS | Comunidad</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root { color-scheme:dark; --bg:#0e0b18; --ink:#ffffff; --soft:#a89cb9; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; }
+    body {
+      background:radial-gradient(ellipse 62% 25% at 50% 66%, rgba(190,38,144,.2), transparent 73%),
+                 radial-gradient(ellipse 72% 36% at 50% 42%, rgba(97,39,168,.13), transparent 75%), var(--bg);
+      color:var(--ink); font-family:Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .page {min-height:100dvh; display:flex; flex-direction:column; align-items:center; padding:36px 24px max(42px, env(safe-area-inset-bottom));}
+    .brand {font-weight:800; font-size:11px; letter-spacing:.28em; color:#e5d7ee; text-align:center; margin-top:12px;}
+    .grow {flex:1 1 auto; min-height:16px;}
+    .content {width:min(100%,430px); display:flex; flex-direction:column; align-items:center; text-align:center;}
+    .mark {width:176px; height:176px; border-radius:38px; display:grid; place-items:center; position:relative;
+      background:linear-gradient(140deg,#24152e,#100e1d 63%,#221429);
+      box-shadow:0 0 0 2px rgba(255,255,255,.06), 0 0 60px rgba(213,31,147,.24),0 30px 85px rgba(0,0,0,.4); }
+    .mark:before {content:""; position:absolute; inset:-3px; padding:3px; border-radius:40px;
+      background:linear-gradient(135deg,#ffab36,#f02496 48%,#7e4ef0);
+      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;}
+    .emblem {width:127px; height:127px; border-radius:50%; border:4px solid #ecc36b; display:grid; place-items:center;
+      background:radial-gradient(circle at 30% 25%,#434022,#172c27 56%,#111626); box-shadow:inset 0 0 23px rgba(0,0,0,.52);}
+    .emblem span {font-weight:1000; font-size:63px; letter-spacing:-.06em; line-height:1;
+      background:linear-gradient(180deg,#fff1b2,#e4ad43 55%,#f6d790);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    h1 {font-size:clamp(26px,7vw,36px); margin:37px 0 8px; letter-spacing:-.035em; line-height:1.16;}
+    p {font-size:15px; color:var(--soft); line-height:1.55; margin:0 0 26px; max-width:300px;}
+    button {border:0; width:100%; min-height:62px; padding:18px 22px; border-radius:100px; cursor:pointer;
+      background:linear-gradient(105deg,#e50987 0%,#9d42c0 52%,#f6a832 100%);
+      color:white; font-size:16px; font-weight:800; box-shadow:0 14px 40px rgba(194,43,155,.28);
+      display:flex; align-items:center; gap:12px; justify-content:center; transition:transform .16s,filter .16s;}
+    button:active {transform:scale(.97); filter:brightness(.95)}
+    button svg {width:21px; height:21px; flex-shrink:0;}
+    .status {min-height:36px; margin-top:16px; font-size:13px; color:#ffc4be; line-height:1.4;}
+    .footer {font-size:11px; letter-spacing:.05em; color:#887990; text-align:center; margin-top:20px;}
+    @media (max-height:650px) {.page{padding-top:18px;} .mark{width:130px;height:130px;border-radius:26px} .mark:before{border-radius:28px} .emblem{width:95px;height:95px} .emblem span{font-size:48px} h1{margin-top:24px;} .brand{margin-top:0;}}
+    @media (prefers-reduced-motion:reduce) {button{transition:none}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="brand">CAPITALBETS · TELEGRAM</div>
+    <div class="grow" aria-hidden="true"></div>
+    <section class="content" aria-label="Acceso a la comunidad">
+      <!-- Puedes sustituir el emblema CB por tu logo; la plantilla funciona sin imágenes externas. -->
+      <div class="mark"><div class="emblem"><span>CB</span></div></div>
+      <h1>Únete a la comunidad</h1>
+      <p>Accede al canal privado desde Telegram.</p>
+      <button id="join" type="button" aria-label="Abrir canal de Telegram">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M21.66 3.32a1.4 1.4 0 0 0-1.46-.13L2.87 10.4a1.36 1.36 0 0 0 .12 2.57l4.3 1.3 1.68 5.04a1.33 1.33 0 0 0 2.23.5l2.59-2.57 4.16 3.06a1.39 1.39 0 0 0 2.17-.82l2.13-14.66a1.4 1.4 0 0 0-.59-1.5ZM9.24 13.7l8.96-6.97-6.82 8.1-.39 2.42-1.75-3.55Z"/></svg>
+        Abrir canal privado
+      </button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </section>
+    <div class="grow" aria-hidden="true"></div>
+    <div class="footer">Acceso a través de Telegram · Se requiere confirmar la unión al canal</div>
+  </main>
+  <script>
+    // PASO OBLIGATORIO: reemplaza el texto por el enlace de invitación de TU canal privado.
+    // Ejemplo del FORMATO (NO es un enlace real): https://t.me/+TU_CODIGO_DE_INVITACION
+    const CHANNEL_URL = 'https://t.me/+REEMPLAZAR_ENLACE';
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      try { tg.setHeaderColor('#0e0b18'); tg.setBackgroundColor('#0e0b18'); } catch (_) {}
+    }
+    const status = document.getElementById('status');
+    document.getElementById('join').addEventListener('click', () => {
+      if (CHANNEL_URL.includes('REEMPLAZAR_ENLACE') || !/^https:\/\/t\.me\/[A-Za-z0-9_+\/-]+(?:\?[A-Za-z0-9_=&%-]+)?$/.test(CHANNEL_URL)) {
+        status.textContent = 'Antes de publicar, edita index.html y configura un enlace válido a tu canal.';
+        return;
+      }
+      status.textContent = '';
+      // La navegación está vinculada al clic del usuario: no hay redirección automática.
+      if (tg && typeof tg.openTelegramLink === 'function') {
+        tg.openTelegramLink(CHANNEL_URL);
+      } else {
+        window.location.assign(CHANNEL_URL);
+      }
+    });
+  </script>
+</body>
+</html>
